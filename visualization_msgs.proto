@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+package visualization_msgs;
+
+import "std_msgs.proto";
+import "geometry_msgs.proto";
+
+// Color for visualization
+message ColorRGBA {
+  float r = 1;
+  float g = 2;
+  float b = 3;
+  float a = 4;
+}
+
+// Marker types
+enum MarkerType {
+  ARROW = 0;
+  CUBE = 1;
+  SPHERE = 2;
+  CYLINDER = 3;
+  LINE_STRIP = 4;
+  LINE_LIST = 5;
+  CUBE_LIST = 6;
+  SPHERE_LIST = 7;
+  POINTS = 8;
+  TEXT_VIEW_FACING = 9;
+  MESH_RESOURCE = 10;
+  TRIANGLE_LIST = 11;
+}
+
+// Marker action
+enum MarkerAction {
+  ADD = 0;
+  MODIFY = 1;
+  DELETE = 2;
+  DELETEALL = 3;
+}
+
+// Interactive marker control
+message InteractiveMarkerControl {
+  string name = 1;
+  geometry_msgs.Quaternion orientation = 2;
+  uint32 orientation_mode = 3;
+  uint32 interaction_mode = 4;
+  bool always_visible = 5;
+  repeated Marker markers = 6;
+  bool independent_marker_orientation = 7;
+  std_msgs.Duration description_text = 8;
+}
+
+// Interactive marker
+message InteractiveMarker {
+  std_msgs.Header header = 1;
+  geometry_msgs.Pose pose = 2;
+  string name = 3;
+  string description = 4;
+  float scale = 5;
+  repeated InteractiveMarkerControl menu_entries = 6;
+  repeated InteractiveMarkerControl controls = 7;
+  bool visible = 8;
+}
+
+// Interactive marker feedback
+message InteractiveMarkerFeedback {
+  std_msgs.Header header = 1;
+  string client_id = 2;
+  string marker_name = 3;
+  string control_name = 4;
+  uint32 event_type = 5;
+  geometry_msgs.Pose pose = 6;
+  uint32 menu_entry_id = 7;
+  geometry_msgs.Point mouse_point = 8;
+  bool mouse_point_valid = 9;
+}
+
+// Interactive marker pose update
+message InteractiveMarkerPose {
+  std_msgs.Header header = 1;
+  geometry_msgs.Pose pose = 2;
+  string name = 3;
+}
+
+// Interactive marker update
+message InteractiveMarkerUpdate {
+  std_msgs.Header header = 1;
+  string server_id = 2;
+  uint64 seq_num = 3;
+  uint32 type = 4;
+  repeated InteractiveMarker markers = 5;
+  repeated string poses = 6;
+  repeated string erases = 7;
+}
+
+// Interactive marker init
+message InteractiveMarkerInit {
+  string server_id = 1;
+  uint64 seq_num = 2;
+  repeated InteractiveMarker markers = 3;
+}
+
+// Menu entry
+message MenuEntry {
+  uint32 id = 1;
+  string title = 2;
+  string command = 3;
+  uint32 command_type = 4;
+  uint32 parent_id = 5;
+}
+
+// Marker message
+message Marker {
+  std_msgs.Header header = 1;
+  string ns = 2;
+  int32 id = 3;
+  uint32 type = 4;
+  uint32 action = 5;
+  geometry_msgs.Pose pose = 6;
+  geometry_msgs.Vector3 scale = 7;
+  ColorRGBA color = 8;
+  std_msgs.Duration lifetime = 9;
+  bool frame_locked = 10;
+  repeated geometry_msgs.Point points = 11;
+  repeated ColorRGBA colors = 12;
+  string text = 13;
+  string mesh_resource = 14;
+  bool mesh_use_embedded_materials = 15;
+}
+
+// Marker array
+message MarkerArray {
+  repeated Marker markers = 1;
+}
+
+// Image marker
+message ImageMarker {
+  std_msgs.Header header = 1;
+  string ns = 2;
+  int32 id = 3;
+  uint32 type = 4;
+  uint32 action = 5;
+  geometry_msgs.Point position = 6;
+  float scale = 7;
+  ColorRGBA outline_color = 8;
+  uint32 filled = 9;
+  ColorRGBA fill_color = 10;
+  std_msgs.Duration lifetime = 11;
+  repeated geometry_msgs.Point points = 12;
+  repeated ColorRGBA outline_colors = 13;
+  bytes image_data = 14;
+}

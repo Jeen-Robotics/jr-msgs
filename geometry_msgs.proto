@@ -1,0 +1,163 @@
+syntax = "proto3";
+
+package geometry_msgs;
+
+import "std_msgs.proto";
+
+// Basic geometric primitives
+message Point {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Point32 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message PointStamped {
+  std_msgs.Header header = 1;
+  Point point = 2;
+}
+
+message Polygon {
+  repeated Point32 points = 1;
+}
+
+message PolygonStamped {
+  std_msgs.Header header = 1;
+  Polygon polygon = 2;
+}
+
+message Pose {
+  Point position = 1;
+  Quaternion orientation = 2;
+}
+
+message Pose2D {
+  double x = 1;
+  double y = 2;
+  double theta = 3;
+}
+
+message PoseArray {
+  std_msgs.Header header = 1;
+  repeated Pose poses = 2;
+}
+
+message PoseStamped {
+  std_msgs.Header header = 1;
+  Pose pose = 2;
+}
+
+message PoseWithCovariance {
+  Pose pose = 1;
+  repeated double covariance = 2;  // 6x6 matrix
+}
+
+message PoseWithCovarianceStamped {
+  std_msgs.Header header = 1;
+  PoseWithCovariance pose = 2;
+}
+
+message Quaternion {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+  double w = 4;
+}
+
+message QuaternionStamped {
+  std_msgs.Header header = 1;
+  Quaternion quaternion = 2;
+}
+
+message Transform {
+  Vector3 translation = 1;
+  Quaternion rotation = 2;
+}
+
+message TransformStamped {
+  std_msgs.Header header = 1;
+  string child_frame_id = 2;
+  Transform transform = 3;
+}
+
+message Twist {
+  Vector3 linear = 1;
+  Vector3 angular = 2;
+}
+
+message TwistStamped {
+  std_msgs.Header header = 1;
+  Twist twist = 2;
+}
+
+message TwistWithCovariance {
+  Twist twist = 1;
+  repeated double covariance = 2;  // 6x6 matrix
+}
+
+message TwistWithCovarianceStamped {
+  std_msgs.Header header = 1;
+  TwistWithCovariance twist = 2;
+}
+
+message Vector3 {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Vector3Stamped {
+  std_msgs.Header header = 1;
+  Vector3 vector = 2;
+}
+
+message Accel {
+  Vector3 linear = 1;
+  Vector3 angular = 2;
+}
+
+message AccelStamped {
+  std_msgs.Header header = 1;
+  Accel accel = 2;
+}
+
+message AccelWithCovariance {
+  Accel accel = 1;
+  repeated double covariance = 2;  // 6x6 matrix
+}
+
+message AccelWithCovarianceStamped {
+  std_msgs.Header header = 1;
+  AccelWithCovariance accel = 2;
+}
+
+message Inertia {
+  double m = 1;  // mass
+  Vector3 com = 2;  // center of mass
+  double ixx = 3;
+  double ixy = 4;
+  double ixz = 5;
+  double iyy = 6;
+  double iyz = 7;
+  double izz = 8;
+}
+
+message InertiaStamped {
+  std_msgs.Header header = 1;
+  Inertia inertia = 2;
+}
+
+message Wrench {
+  Vector3 force = 1;
+  Vector3 torque = 2;
+}
+
+message WrenchStamped {
+  std_msgs.Header header = 1;
+  Wrench wrench = 2;
+}

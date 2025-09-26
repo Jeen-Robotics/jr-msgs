@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package nav_msgs;
+
+import "std_msgs.proto";
+import "geometry_msgs.proto";
+
+// Occupancy grid for mapping
+message OccupancyGrid {
+  std_msgs.Header header = 1;
+  MapMetaData info = 2;
+  repeated int32 data = 3;
+}
+
+message MapMetaData {
+  std_msgs.Time map_load_time = 1;
+  float resolution = 2;
+  uint32 width = 3;
+  uint32 height = 4;
+  geometry_msgs.Pose origin = 5;
+}
+
+// Path planning
+message Path {
+  std_msgs.Header header = 1;
+  repeated geometry_msgs.PoseStamped poses = 2;
+}
+
+// Odometry
+message Odometry {
+  std_msgs.Header header = 1;
+  string child_frame_id = 2;
+  geometry_msgs.PoseWithCovariance pose = 3;
+  geometry_msgs.TwistWithCovariance twist = 4;
+}
+
+// Grid cells for path planning
+message GridCells {
+  std_msgs.Header header = 1;
+  float cell_width = 2;
+  float cell_height = 3;
+  repeated geometry_msgs.Point cells = 4;
+}
+
+// Get map service request/response
+message GetMapRequest {
+  // Empty request
+}
+
+message GetMapResponse {
+  OccupancyGrid map = 1;
+}
+
+message GetMapActionGoal {
+  std_msgs.Header header = 1;
+  GetMapGoal goal = 2;
+}
+
+message GetMapActionResult {
+  std_msgs.Header header = 1;
+  uint32 status = 2;
+  GetMapResult result = 3;
+}
+
+message GetMapActionFeedback {
+  std_msgs.Header header = 1;
+  uint32 status = 2;
+  GetMapFeedback feedback = 3;
+}
+
+message GetMapAction {
+  repeated GetMapActionGoal action_goal = 1;
+  repeated GetMapActionResult action_result = 2;
+  repeated GetMapActionFeedback action_feedback = 3;
+}
+
+message GetMapGoal {
+  // Empty goal
+}
+
+message GetMapResult {
+  OccupancyGrid map = 1;
+}
+
+message GetMapFeedback {
+  // Empty feedback
+}
+
+// Set map service
+message SetMapRequest {
+  OccupancyGrid map = 1;
+  geometry_msgs.PoseWithCovarianceStamped initial_pose = 2;
+}
+
+message SetMapResponse {
+  bool success = 1;
+}
+
+// Get plan service
+message GetPlanRequest {
+  geometry_msgs.PoseStamped start = 1;
+  geometry_msgs.PoseStamped goal = 2;
+  float tolerance = 3;
+}
+
+message GetPlanResponse {
+  Path plan = 1;
+}

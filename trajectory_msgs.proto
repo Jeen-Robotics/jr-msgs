@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package trajectory_msgs;
+
+import "std_msgs.proto";
+import "geometry_msgs.proto";
+
+// Joint trajectory point
+message JointTrajectoryPoint {
+  repeated double positions = 1;
+  repeated double velocities = 2;
+  repeated double accelerations = 3;
+  repeated double effort = 4;
+  std_msgs.Duration time_from_start = 5;
+}
+
+// Multi-DOF joint trajectory point
+message MultiDOFJointTrajectoryPoint {
+  repeated geometry_msgs.Transform transforms = 1;
+  repeated geometry_msgs.Twist velocities = 2;
+  repeated geometry_msgs.Twist accelerations = 3;
+  std_msgs.Duration time_from_start = 4;
+}
+
+// Joint trajectory
+message JointTrajectory {
+  std_msgs.Header header = 1;
+  repeated string joint_names = 2;
+  repeated JointTrajectoryPoint points = 3;
+}
+
+// Multi-DOF joint trajectory
+message MultiDOFJointTrajectory {
+  std_msgs.Header header = 1;
+  repeated string joint_names = 2;
+  repeated MultiDOFJointTrajectoryPoint points = 3;
+}

@@ -1,0 +1,212 @@
+syntax = "proto3";
+
+package sensor_msgs;
+
+import "std_msgs.proto";
+import "geometry_msgs.proto";
+
+// Camera-related messages
+message CameraInfo {
+  std_msgs.Header header = 1;
+  uint32 height = 2;
+  uint32 width = 3;
+  string distortion_model = 4;
+  repeated double D = 5;
+  repeated double K = 6;  // 3x3 intrinsic matrix
+  repeated double R = 7;  // 3x3 rotation matrix
+  repeated double P = 8;  // 3x4 projection matrix
+  uint32 binning_x = 9;
+  uint32 binning_y = 10;
+  RegionOfInterest roi = 11;
+}
+
+message RegionOfInterest {
+  uint32 x_offset = 1;
+  uint32 y_offset = 2;
+  uint32 height = 3;
+  uint32 width = 4;
+  bool do_rectify = 5;
+}
+
+message Image {
+  std_msgs.Header header = 1;
+  uint32 height = 2;
+  uint32 width = 3;
+  string encoding = 4;
+  bool is_bigendian = 5;
+  uint32 step = 6;
+  bytes data = 7;
+}
+
+message CompressedImage {
+  std_msgs.Header header = 1;
+  string format = 2;
+  bytes data = 3;
+}
+
+message PointField {
+  string name = 1;
+  uint32 offset = 2;
+  uint32 datatype = 3;
+  uint32 count = 4;
+}
+
+message PointCloud2 {
+  std_msgs.Header header = 1;
+  uint32 height = 2;
+  uint32 width = 3;
+  repeated PointField fields = 4;
+  bool is_bigendian = 5;
+  uint32 point_step = 6;
+  uint32 row_step = 7;
+  bytes data = 8;
+  bool is_dense = 9;
+}
+
+message PointCloud {
+  std_msgs.Header header = 1;
+  repeated geometry_msgs.Point32 points = 2;
+  repeated std_msgs.ChannelFloat32 channels = 3;
+}
+
+
+// IMU and orientation messages
+message Imu {
+  std_msgs.Header header = 1;
+  geometry_msgs.Quaternion orientation = 2;
+  repeated double orientation_covariance = 3;  // 3x3 matrix
+  geometry_msgs.Vector3 angular_velocity = 4;
+  repeated double angular_velocity_covariance = 5;  // 3x3 matrix
+  geometry_msgs.Vector3 linear_acceleration = 6;
+  repeated double linear_acceleration_covariance = 7;  // 3x3 matrix
+}
+
+// Laser scan messages
+message LaserScan {
+  std_msgs.Header header = 1;
+  float angle_min = 2;
+  float angle_max = 3;
+  float angle_increment = 4;
+  float time_increment = 5;
+  float scan_time = 6;
+  float range_min = 7;
+  float range_max = 8;
+  repeated float ranges = 9;
+  repeated float intensities = 10;
+}
+
+// Multi-echo laser scan
+message MultiEchoLaserScan {
+  std_msgs.Header header = 1;
+  float angle_min = 2;
+  float angle_max = 3;
+  float angle_increment = 4;
+  float time_increment = 5;
+  float scan_time = 6;
+  float range_min = 7;
+  float range_max = 8;
+  repeated LaserEcho ranges = 9;
+  repeated LaserEcho intensities = 10;
+}
+
+message LaserEcho {
+  repeated float echoes = 1;
+}
+
+
+// Joint state message
+message JointState {
+  std_msgs.Header header = 1;
+  repeated string name = 2;
+  repeated double position = 3;
+  repeated double velocity = 4;
+  repeated double effort = 5;
+}
+
+// Joy message for joystick input
+message Joy {
+  std_msgs.Header header = 1;
+  repeated float axes = 2;
+  repeated int32 buttons = 3;
+}
+
+// Joy feedback for force feedback
+message JoyFeedback {
+  uint32 type = 1;  // 0: LED, 1: RUMBLE
+  uint32 id = 2;
+  float intensity = 3;
+}
+
+message JoyFeedbackArray {
+  repeated JoyFeedback array = 1;
+}
+
+// Magnetic field
+message MagneticField {
+  std_msgs.Header header = 1;
+  geometry_msgs.Vector3 magnetic_field = 2;
+  repeated double magnetic_field_covariance = 3;  // 3x3 matrix
+}
+
+// Multi DOF joint state
+message MultiDOFJointState {
+  std_msgs.Header header = 1;
+  repeated string joint_names = 2;
+  repeated geometry_msgs.Transform transforms = 3;
+  repeated geometry_msgs.Twist twist = 4;
+  repeated geometry_msgs.Wrench wrench = 5;
+}
+
+// NavSat (GPS) messages
+message NavSatFix {
+  std_msgs.Header header = 1;
+  NavSatStatus status = 2;
+  double latitude = 3;
+  double longitude = 4;
+  double altitude = 5;
+  repeated double position_covariance = 6;  // 3x3 matrix
+  uint32 position_covariance_type = 7;
+}
+
+message NavSatStatus {
+  int32 status = 1;  // -1: no fix, 0: fix, 1: SBAS fix, 2: GBAS fix
+  uint32 service = 2;  // bitmask of services
+}
+
+// Range sensor (ultrasonic, IR, etc.)
+message Range {
+  std_msgs.Header header = 1;
+  uint32 radiation_type = 2;  // 0: ultrasound, 1: infrared
+  float field_of_view = 3;
+  float min_range = 4;
+  float max_range = 5;
+  float range = 6;
+}
+
+// Temperature sensor
+message Temperature {
+  std_msgs.Header header = 1;
+  double temperature = 2;
+  double variance = 3;
+}
+
+// Relative humidity
+message RelativeHumidity {
+  std_msgs.Header header = 1;
+  double relative_humidity = 2;
+  double variance = 3;
+}
+
+// Fluid pressure
+message FluidPressure {
+  std_msgs.Header header = 1;
+  double fluid_pressure = 2;
+  double variance = 3;
+}
+
+// Illuminance
+message Illuminance {
+  std_msgs.Header header = 1;
+  double illuminance = 2;
+  double variance = 3;
+}

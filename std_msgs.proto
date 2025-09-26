@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+package std_msgs;
+
+// Standard ROS message types converted to protobuf
+
+// Basic data types
+message Bool {
+  bool data = 1;
+}
+
+message Int8 {
+  int32 data = 1;
+}
+
+message UInt8 {
+  uint32 data = 1;
+}
+
+message Int16 {
+  int32 data = 1;
+}
+
+message UInt16 {
+  uint32 data = 1;
+}
+
+message Int32 {
+  int32 data = 1;
+}
+
+message UInt32 {
+  uint32 data = 1;
+}
+
+message Int64 {
+  int64 data = 1;
+}
+
+message UInt64 {
+  uint64 data = 1;
+}
+
+message Float32 {
+  float data = 1;
+}
+
+message Float64 {
+  double data = 1;
+}
+
+message String {
+  string data = 1;
+}
+
+message Byte {
+  bytes data = 1;
+}
+
+message Char {
+  uint32 data = 1;
+}
+
+message Duration {
+  int32 sec = 1;
+  int32 nsec = 2;
+}
+
+message Time {
+  int32 sec = 1;
+  int32 nsec = 2;
+}
+
+message Header {
+  uint32 seq = 1;
+  Time stamp = 2;
+  string frame_id = 3;
+}
+
+// Multi-dimensional arrays
+message MultiArrayDimension {
+  string label = 1;
+  uint32 size = 2;
+  uint32 stride = 3;
+}
+
+message MultiArrayLayout {
+  repeated MultiArrayDimension dim = 1;
+  uint32 data_offset = 2;
+}
+
+message UInt8MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated uint32 data = 2;
+}
+
+message UInt16MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated uint32 data = 2;
+}
+
+message UInt32MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated uint32 data = 2;
+}
+
+message UInt64MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated uint64 data = 2;
+}
+
+message Int8MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated int32 data = 2;
+}
+
+message Int16MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated int32 data = 2;
+}
+
+message Int32MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated int32 data = 2;
+}
+
+message Int64MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated int64 data = 2;
+}
+
+message Float32MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated float data = 2;
+}
+
+message Float64MultiArray {
+  MultiArrayLayout layout = 1;
+  repeated double data = 2;
+}
+
+message BoolMultiArray {
+  MultiArrayLayout layout = 1;
+  repeated bool data = 2;
+}
+
+message StringMultiArray {
+  MultiArrayLayout layout = 1;
+  repeated string data = 2;
+}
+
+message ByteMultiArray {
+  MultiArrayLayout layout = 1;
+  repeated bytes data = 2;
+}
+
+message CharMultiArray {
+  MultiArrayLayout layout = 1;
+  repeated uint32 data = 2;
+}
+
+message ColorRGBA {
+  float r = 1;
+  float g = 2;
+  float b = 3;
+  float a = 4;
+}
+
+message Empty {
+  // Empty message
+}
+
+message ChannelFloat32 {
+  string name = 1;
+  repeated float values = 2;
+}

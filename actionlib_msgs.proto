@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package actionlib_msgs;
+
+import "std_msgs.proto";
+
+// Goal ID for action messages
+message GoalID {
+  std_msgs.Time stamp = 1;
+  string id = 2;
+}
+
+// Goal status
+message GoalStatus {
+  GoalID goal_id = 1;
+  uint32 status = 2;  // PENDING=0, ACTIVE=1, PREEMPTED=2, SUCCEEDED=3, ABORTED=4, REJECTED=5, PREEMPTING=6, RECALLING=7, RECALLED=8, LOST=9
+  string text = 3;
+}
+
+// Goal status array
+message GoalStatusArray {
+  std_msgs.Header header = 1;
+  repeated GoalStatus status_list = 2;
+}
+
+// Common action result message
+message ActionResult {
+  std_msgs.Header header = 1;
+  GoalStatus status = 2;
+}
+
+// Common action feedback message
+message ActionFeedback {
+  std_msgs.Header header = 1;
+  GoalStatus status = 2;
+}
+
+// Common action message
+message Action {
+  repeated GoalStatus action_goal = 1;
+  repeated ActionResult action_result = 2;
+  repeated ActionFeedback action_feedback = 3;
+}
